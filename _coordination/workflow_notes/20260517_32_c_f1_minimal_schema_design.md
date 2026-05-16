@@ -86,7 +86,7 @@ ARCHIVED    歷史保留，不在 active scope
 proposed         僅提案，尚無 user accept
 accepted_by_user user 明文接受
 superseded       被另一個 decision 取代
-n_a              不適用（type ≠ decision）
+n_a              不承載 decision / acceptance effect 的 type
 ```
 
 組合範例：
@@ -95,6 +95,21 @@ n_a              不適用（type ≠ decision）
 - `RECORDED + n_a`：已落地的非決策動作（如 mistake_disclosure）
 - `DRAFT + proposed`：尚在 standard gate 內的提案
 - `SUPERSEDED + superseded`：被新版取代的舊決策
+
+### 有效組合矩陣（依 type → decision_effect 約束）
+
+| type | 允許的 decision_effect | 不允許 |
+| --- | --- | --- |
+| `decision` | `proposed` / `accepted_by_user` / `superseded` | `n_a`（decision 必有 effect） |
+| `gate_pass` | `n_a`（gate 動作本身不是決策） | `proposed` / `accepted_by_user` / `superseded` |
+| `file_write` | `n_a` | 其他 |
+| `mistake_disclosure` | `n_a` | 其他 |
+| `pushback` | `n_a` | 其他 |
+| `handoff` | `proposed` / `accepted_by_user` / `superseded`（含 user 接受邏輯；新 handoff 可取代舊 handoff） | `n_a` |
+| `health_check` | `n_a` | 其他 |
+| `external_input` | `n_a` | 其他 |
+
+`record_status` 與 `decision_effect` 兩個維度獨立演進，但任何組合若違反上表約束 → 寫入時 stop-and-ask；未來 schema validator phase 將強制檢查。
 
 ## 7. Frontmatter 完整欄位（21 個）
 
@@ -162,16 +177,19 @@ frontmatter 之後 body 建議結構（不強制）：
 
 新對話啟動讀檔順序：
 
-**必讀**（startup packet 三本）：
+**必讀**（startup packet 四本）：
 
 1. `_coordination/current_state.md`
 2. `_coordination/project_adapter/writing_tool_project_adapter.md`
-3. `_coordination/actions/index.md`
+3. `harness/route_contracts/writing_tool_route_contract.md`
+4. `_coordination/actions/index.md`
 
 **動態決定**（依任務）：
 
 - user / controller 明文指定 action ids
 - 依 tag / type / phase_ref 篩選
+
+**重要邊界**：讀 `index.md` 取得的 metadata（id / type / status / phase_ref / title 等）**不**等於讀 action body 授權。任何 action body read 仍需 user / controller 明文 Approved Read Scope（依 Core §5）。篩選結果只能用來產生「Approved Read Scope proposal」交由 user 過 standard gate。
 
 **禁止**：
 
@@ -252,7 +270,7 @@ Write-Host "Index regenerated: $IndexFile ($($actionFiles.Count) entries)"
 ## 11. 維護紀律
 
 - 每個 gate-passed action **應**產出 action file（漏寫 = 中度失維）
-- index 由 script 重生，**不**手寫
+- 初始版可手寫；helper 啟用後由 script 重生，不手寫
 - RECORDED action **不可改**內容；修正用 supersede 鏈
 - 健診（list DRAFT > 7 天 / supersede 鏈斷裂等）延後到 F2
 
@@ -284,7 +302,7 @@ F1 minimal 跑一段觀察期後另開 strict gate phase 啟動上述。
 - schema 被當 LOCKED authority
 - validator / automation 未經 strict gate 上線
 - §11 被自動遷移
-- index 手寫
+- helper 啟用後 index 被手寫
 - action file id 被改 / RECORDED 內容被改
 - SUPERSEDED action 被當 current authority
 - 任何 evidence-as-approval

@@ -62,13 +62,13 @@ generic 名稱不視為有效 routing target。
 | --- | --- |
 | Repo 初始化 | 已 git init，已建 commit |
 | Branch | master，追蹤 origin/master |
-| Commits | 1（58d33a7 claude 重構 HARNESS，mark75369，2026-05-17） |
+| Commits | 4 total；recent: 3da3dce（32B + 維護債）/ 479dfac（Codex audit P1/P2/P3 follow-up）/ ba49579（F1 minimal phase launch + audit follow-up）；initial: 58d33a7（claude 重構 HARNESS） |
 | Remote URL | https://github.com/mark75369/writing-tool-project-folder.git |
-| Remote 實際設定 | ✓ origin（user-side 在 PowerShell 設定） |
+| Remote 實際設定 | ✓ origin |
 | .git/index.lock 殘留 | 無（已確認） |
-| 最近一次 push | 2026-05-17 user-side，master → origin/master，17 objects / 40.47 KiB |
+| 最近一次 push | 2026-05-17 user-side，master → origin/master，最新 head: ba49579 |
 
-設定 remote / 處理 index.lock 為 strict gate 動作；Codex 不主動執行（依 Adapter §7a 候選）。
+設定 remote / 處理 index.lock 為 strict gate 動作；Codex 不主動執行（依 Adapter §7a）。
 
 ## 6. HARNESS Files Status
 
@@ -109,7 +109,9 @@ Push Gate：CLOSED
 打開條件：user 明文授權（詞表見 Adapter §7）。
 
 歷史紀錄：
-- 2026-05-17 OPEN（user 在 PowerShell 執行 `git push -u origin master`）→ 動作完成後自動回 CLOSED
+- 2026-05-17 OPEN（user 在 PowerShell `git push -u origin master`，commit 3da3dce）→ CLOSED
+- 2026-05-17 OPEN（user 在 PowerShell push 479dfac audit follow-up）→ CLOSED
+- 2026-05-17 OPEN（user 在 PowerShell push ba49579 F1 minimal phase launch）→ CLOSED
 
 當前授權詞表是否被更新：無。
 
@@ -125,9 +127,11 @@ Push Gate：CLOSED
 | .git/index.lock 清除 | N/A（無殘留） |
 | git remote add origin 執行 | ✓ 完成（user-side） |
 | 第一次 push | ✓ 完成（user-side，2026-05-17） |
-| Adapter §7a Sandbox / Platform Git Boundary 新增 | **本輪 standard gate 處理中** |
-| §12 異常紀錄補錯誤 #2 / #3 | **本輪 standard gate 處理中** |
-| F1 minimal 設計 | 下一個 phase（待 user 授權後啟動） |
+| Adapter §7a Sandbox / Platform Git Boundary 新增 | ✓ 完成（commit 3da3dce 已含） |
+| §12 異常紀錄補錯誤 #2 / #3 | ✓ 完成（commit 3da3dce 已含） |
+| Adapter §12/§13/§7/§20 與 startup packet 對齊 §7a | ✓ 完成（commit 479dfac，依 Codex audit P1/P2/P3） |
+| F1 minimal 設計 | ✓ 已啟動，REVIEW 1.0-candidate（commit ba49579） |
+| F1 minimal Codex audit | **本輪處理中** |
 | F2 minimal 設計 | 下一個 phase（待 user 授權後啟動） |
 | Platform Capability Hook 設計 | 下一個 phase（F1+F2 後） |
 | F3 / F4 設計 | 延後 |
@@ -162,6 +166,14 @@ Push Gate：CLOSED
 | 2026-05-17 | Codex 完成 32B review，回覆 5 個 review findings（2 P1 + 3 P2）+ 順序建議 + 32A-LOCK 結論 |
 | 2026-05-17 | Claude 對 Codex review 逐條表態並提出本輪維護債設計稿（a/b/c） |
 | 2026-05-17 | 維護債 a/b/c 走 standard gate 落實到 current_state.md + Adapter |
+| 2026-05-17 | user-side push commit 479dfac（Codex audit P1/P2/P3 follow-up） |
+| 2026-05-17 | F1 minimal phase 啟動（user 回 F1-A 到 F1-H 8 項決策） |
+| 2026-05-17 | Claude 落檔 F1 schema 設計 + sample action file + index 初始版 |
+| 2026-05-17 | user-side push commit ba49579（F1 minimal phase launch + audit follow-up） |
+| 2026-05-17 | Codex 完成 F1 audit，回覆 2 P1 / 2 P2 / 2 P3 findings |
+| 2026-05-17 | Claude 本輪維護債 follow-up 套用 P1/P2/P3 修正 + dog-food gate_pass action file |
+| 2026-05-17 | Codex F1 audit 第二輪（diff-only 模式）回覆，2 P2 + 2 P3 findings，無 P1 |
+| 2026-05-17 | Claude 套用 5 個小修正 + dog-food 第三個 action file（F1-audit-followup iter2） |
 
 ## 12. 異常紀錄 / Anomaly Log
 
@@ -217,10 +229,10 @@ Push Gate：CLOSED
 ## 13. Next Recommended Step
 
 ```
-1. user 審本輪維護債落實結果（current_state.md §5/§8/§9/§11/§12/§13 + Adapter §7a）
-2. 若 ok，user-side commit + push 把 32B 提案檔 + 維護債更新一起上傳
-3. 後續路徑（依 Codex 順序）：F1 minimal → F2 minimal → Platform Capability Hook → F3 → F4
-4. F1 / F2 / 後續 phase 每一個都需獨立啟動 gate
+1. user 審本輪 F1 audit follow-up（current_state §5/§8/§9/§11/§13 + F1 schema §6/§9/§14 + Adapter §0 + index）
+2. 若 ok，user-side commit + push
+3. 後續路徑（依 Codex 順序）：F1 minimal 觀察期 → F2 minimal → Platform Capability Hook → F3 → F4
+4. F2 / 後續 phase 每一個都需獨立啟動 gate；F1 觀察期 = 累積幾個真實 action file 看 schema 是否實用
 ```
 
 本段是 advisory，不是 approval。

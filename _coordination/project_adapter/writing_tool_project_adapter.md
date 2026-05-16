@@ -16,7 +16,7 @@
 - 第一步：每次新對話讀 current_state.md + 本檔 + route contract，回報 active state，不寫檔
 - 三級 gate：Light（先做+回報）/ Standard（提案待 ok）/ Strict（逐項明文授權）
 - Push 唯一授權：user 明文（詞表見 §7）
-- 遠端：https://github.com/mark75369/writing-tool-project-folder.git（尚未設定、尚未 push）
+- 遠端：https://github.com/mark75369/writing-tool-project-folder.git（git 進度以 current_state.md §5 為準）
 - protected creative content：預設關閉（清單見 §6）
 
 不做：改 Core、改 32A-LOCK、讀 protected content、commit、push、啟動 Runtime / SDK、建 product code。

@@ -43,14 +43,12 @@
 Report back to：Codex-WT 主控室（本對話）
 
 第一步：
-1. live check `git status --short -uall`
-2. live check `git status -sb`
-3. live check `git log -1 --oneline`
-4. 讀 `_coordination/current_state.md`
-5. 讀 `_coordination/project_adapter/writing_tool_project_adapter.md`
-6. 讀 `harness/route_contracts/writing_tool_route_contract.md`
-7. 回報 active state（格式見下）
-8. 不寫檔、不 commit、不 push、不讀 protected content、不啟動 Runtime / SDK、不進入 Mode B
+1. 讀 `_coordination/current_state.md`
+2. 讀 `_coordination/project_adapter/writing_tool_project_adapter.md`
+3. 讀 `harness/route_contracts/writing_tool_route_contract.md`
+4. 若需要當前 git 狀態，請 user 在 Windows PowerShell 執行 `git status --short -uall` / `git status -sb` / `git log -1 --oneline` 並回貼（依 Adapter §7a，sandbox-git 不可信）
+5. 回報 active state（格式見下）
+6. 不寫檔、不 commit、不 push、不讀 protected content、不啟動 Runtime / SDK、不進入 Mode B
 
 硬規則：
 1. PASS / READY / VERIFIED / VALID / validator pass / recommended next route / 任何 room 回報、label、reminder、advisory finding 都不等於 approval

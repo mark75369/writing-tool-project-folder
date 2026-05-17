@@ -62,11 +62,11 @@ generic 名稱不視為有效 routing target。
 | --- | --- |
 | Repo 初始化 | 已 git init，已建 commit |
 | Branch | master，追蹤 origin/master |
-| Commits | 4 total；recent: 3da3dce（32B + 維護債）/ 479dfac（Codex audit P1/P2/P3 follow-up）/ ba49579（F1 minimal phase launch + audit follow-up）；initial: 58d33a7（claude 重構 HARNESS） |
+| Commits | 5 total；recent: 094907c（F1 audit follow-up iter2）/ 3da3dce（32B + 維護債）/ 479dfac（Codex audit P1/P2/P3 follow-up）/ ba49579（F1 minimal phase launch + audit follow-up）；initial: 58d33a7（claude 重構 HARNESS） |
 | Remote URL | https://github.com/mark75369/writing-tool-project-folder.git |
 | Remote 實際設定 | ✓ origin |
 | .git/index.lock 殘留 | 無（已確認） |
-| 最近一次 push | 2026-05-17 user-side，master → origin/master，最新 head: ba49579 |
+| 最近一次 push | 2026-05-17 user-side（GitHub Desktop），master → origin/master，最新 head: 094907c |
 
 設定 remote / 處理 index.lock 為 strict gate 動作；Codex 不主動執行（依 Adapter §7a）。
 
@@ -112,6 +112,7 @@ Push Gate：CLOSED
 - 2026-05-17 OPEN（user 在 PowerShell `git push -u origin master`，commit 3da3dce）→ CLOSED
 - 2026-05-17 OPEN（user 在 PowerShell push 479dfac audit follow-up）→ CLOSED
 - 2026-05-17 OPEN（user 在 PowerShell push ba49579 F1 minimal phase launch）→ CLOSED
+- 2026-05-17 OPEN（user 在 GitHub Desktop push 094907c F1 audit follow-up iter2）→ CLOSED
 
 當前授權詞表是否被更新：無。
 
@@ -122,7 +123,7 @@ Push Gate：CLOSED
 | 設計室 / 實作室 / review room / validation room 具體名稱 | TBD |
 | External advisory reviewer | not configured；本對話 Codex 一次性 review 為 advisory only |
 | protected source 清單擴充（含本專案內子路徑） | TBD，未來會做 |
-| Mode B 需求定義 | TBD |
+| Mode B 需求定義 | TBD；F2-A 到 F2-H 決策採 B-2.B extension: {} 方向，但 F2 schema 尚未啟動 |
 | 第一個 commit | ✓ 完成（58d33a7） |
 | .git/index.lock 清除 | N/A（無殘留） |
 | git remote add origin 執行 | ✓ 完成（user-side） |
@@ -131,8 +132,11 @@ Push Gate：CLOSED
 | §12 異常紀錄補錯誤 #2 / #3 | ✓ 完成（commit 3da3dce 已含） |
 | Adapter §12/§13/§7/§20 與 startup packet 對齊 §7a | ✓ 完成（commit 479dfac，依 Codex audit P1/P2/P3） |
 | F1 minimal 設計 | ✓ 已啟動，REVIEW 1.0-candidate（commit ba49579） |
-| F1 minimal Codex audit | **本輪處理中** |
-| F2 minimal 設計 | 下一個 phase（待 user 授權後啟動） |
+| F1 minimal Codex audit | ✓ 完成（iter2 已 push at 094907c） |
+| F2 minimal pre-check dispatch | ✓ 完成（32D 發出，Codex 32E 回） |
+| F2 minimal launch（Strict Gate） | 待 user 明文授權；F2-A 到 F2-H pre-launch design decisions finalized as REVIEW evidence |
+| F2 schema 完整版設計檔（32F 或同期 workflow note） | 待 F2 strict gate 後啟動 |
+| F2 minimal 設計 | 準備就緒；strict gate 授權後啟動 |
 | Platform Capability Hook 設計 | 下一個 phase（F1+F2 後） |
 | F3 / F4 設計 | 延後 |
 | LOCKED 升級候選 | 暫無 |
@@ -174,6 +178,13 @@ Push Gate：CLOSED
 | 2026-05-17 | Claude 本輪維護債 follow-up 套用 P1/P2/P3 修正 + dog-food gate_pass action file |
 | 2026-05-17 | Codex F1 audit 第二輪（diff-only 模式）回覆，2 P2 + 2 P3 findings，無 P1 |
 | 2026-05-17 | Claude 套用 5 個小修正 + dog-food 第三個 action file（F1-audit-followup iter2） |
+| 2026-05-17 | user-side push commit 094907c（F1 audit follow-up iter2，via GitHub Desktop） |
+| 2026-05-18 | F2 minimal pre-check dispatch packet（32D）產出，由 user 轉交 Codex peer review |
+| 2026-05-18 | Codex peer review response（32E）收到 — 11 校核點全答 + 3 refinement + 3 design contribution |
+| 2026-05-18 | Active controller §4.2「sync 自然消除」設計判斷修正（advisory correction，未進 §12） |
+| 2026-05-18 | User 對 Codex 校核作 4 條 pushback；全採 active controller 子選項建議（#1 4-C / #2 T6a+T6b / #3 S-B / #4 X） |
+| 2026-05-18 | Codex peer review 二輪校核 L1-L6 提案；P2 5 條 + P3 4 條修正套用後落檔 |
+| 2026-05-18 | L1–L6 落檔提案執行（32D + 32E workflow notes + §11/§9 update + 2 action files + index 手動更新） |
 
 ## 12. 異常紀錄 / Anomaly Log
 
